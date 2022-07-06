@@ -54,7 +54,8 @@ const Container = styled.div`
     border-radius: 50px;
     background-color:#654c41;
     border: none;
-    color: #FFFFFF
+    color: #FFFFFF;
+    font: 700 14px 'Quicksand', sans-serif;
   }
 `
 // #EFEFEF
