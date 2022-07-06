@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { Link } from "react-router-dom";
 import welcome from "../../../assets/images/layout/welcome.png"
 export default function WelcomePage() {
   return (
@@ -8,7 +9,7 @@ export default function WelcomePage() {
       <div>
         <h2>Bem-vindo!</h2>
         <p>Encontre as maiores delícias das cafeterias e receba no conforto da sua casa!</p>
-        <button>Começar</button>
+        <Link to="/sign-in/"><button>Começar</button></Link>
       </div>
     </Container>
   );
