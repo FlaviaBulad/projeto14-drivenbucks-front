@@ -3,6 +3,7 @@
 }
 
 body {
-  width: 414px;
-  height: 896px;
+  max-width: 414px;
+  /* height: 896px; */
+  margin: auto;
 }

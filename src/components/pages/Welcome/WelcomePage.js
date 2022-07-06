@@ -1,3 +1,60 @@
+import styled from "styled-components"
+import welcome from "../../../assets/images/layout/welcome.png"
 export default function WelcomePage() {
-  return <h1>Página de boas vindas</h1>;
-}
+  return (
+    <Container>
+      <h1>Drivenbucks</h1>
+      <img src={welcome} alt=""/>
+      <div>
+        <h2>Bem-vindo!</h2>
+        <p>Encontre as maiores delícias das cafeterias e receba no conforto da sua casa!</p>
+        <button>Começar</button>
+      </div>
+    </Container>
+  );
+};
+
+const Container = styled.div`
+  background-color:#EFEFEF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h1{
+    margin-top: 40px;
+    font: 700 40px 'Quicksand', sans-serif;
+    color: #d57e52;
+  };
+  img{
+    margin-top: 20px;
+    max-width: 300px;
+  };
+  div{
+    background-color:#FFFFFF;
+    border-radius:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:25px;
+    gap:20px;
+  };
+  h2{
+    font: 700 30px 'Quicksand', sans-serif;
+    color: #654c41;
+  };
+  p{
+    font: 400 14px 'Quicksand', sans-serif;
+    color: #545454;
+    text-align: center;
+  };
+  button{
+    width: 150px;
+    height: 40px;
+    border-radius: 50px;
+    background-color:#654c41;
+    border: none;
+    color: #FFFFFF
+  }
+`
+// #EFEFEF
