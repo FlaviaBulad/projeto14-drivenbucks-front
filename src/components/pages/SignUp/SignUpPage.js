@@ -35,7 +35,7 @@ export default function SignUpPage() {
 
       setIsLoading(false);
       alert("Cadastro criado com sucesso!");
-      navigate("/");
+      navigate("/sign-in");
     } catch (error) {
       setIsLoading(false);
       alert(`Erro ao cadastrar: ${error}`);
@@ -46,12 +46,12 @@ export default function SignUpPage() {
     return (
       <>
         <Logo />
-        <h2>
+        <Greeting>
           Olá!
           <p>Preencha os dados para continuar</p>
-        </h2>
-        <form onSubmit={SignUpDataToAPI}>
-          <input
+        </Greeting>
+        <Form onSubmit={SignUpDataToAPI}>
+          <Input
             type="text"
             placeholder="Seu nome"
             name="name"
@@ -59,7 +59,7 @@ export default function SignUpPage() {
             value={signUpData.name}
             required
           />
-          <input
+          <Input
             type="email"
             placeholder="Seu melhor email"
             name="email"
@@ -68,7 +68,7 @@ export default function SignUpPage() {
             required
           />
 
-          <input
+          <Input
             type="password"
             placeholder="senha"
             name="password"
@@ -76,7 +76,7 @@ export default function SignUpPage() {
             value={signUpData.password}
             required
           />
-          <input
+          <Input
             type="password"
             placeholder="Confirme a senha"
             name="password_confirmation"
@@ -85,24 +85,23 @@ export default function SignUpPage() {
             required
           />
 
-          <button type="submit" disabled={isLoading}>
+          <Button type="submit" disabled={isLoading}>
             {isLoading ? (
               <Spinner
                 type="ThreeDots"
                 color="#FFFFFF"
                 height={50}
-                padding={50}
                 width={50}
               />
             ) : (
               "Cadastrar"
             )}
-          </button>
-        </form>
+          </Button>
+        </Form>
 
-        <Link to="/sign-in">
+        <StyledLink to="/sign-in">
           Já possui uma conta? <span>Entrar</span>
-        </Link>
+        </StyledLink>
       </>
     );
   }
@@ -118,4 +117,60 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #efefef;
+`;
+
+const Greeting = styled.h2`
+  font: 700 34px "Quicksand", sans-serif;
+  color: #654c41;
+  margin-right: 80px;
+  p {
+    font: 400 12px "Quicksand", sans-serif;
+    color: #654c41;
+  }
+`;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0 25px;
+`;
+
+const Input = styled.input`
+  width: 300px;
+  height: 45px;
+  margin-bottom: 30px;
+  padding: 10px;
+  border: none;
+  border-radius: 50px;
+  background-color: "#FFFFFF;";
+  &::placeholder {
+    font: 400 14px "Quicksand", sans-serif;
+    color: #737373;
+    padding-left: 50px;
+  }
+`;
+
+const Button = styled.button`
+  width: 300px;
+  height: 45px;
+  border: none;
+  border-radius: 50px;
+  background: #654c41;
+
+  font: 700 20px "Quicksand", sans-serif;
+  text-align: center;
+  color: #ffffff;
+`;
+
+const StyledLink = styled(Link)`
+  width: 227px;
+  height: 18px;
+  font: 400 14px "Quicksand", sans-serif;
+  text-decoration: none;
+  color: #545454;
+  span {
+    color: #d57e52;
+    font-weight: 700;
+  }
 `;
