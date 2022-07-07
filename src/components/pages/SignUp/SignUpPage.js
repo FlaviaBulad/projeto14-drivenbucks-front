@@ -3,6 +3,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import { FiArrowLeft, FiUser, FiMail, FiLock } from "react-icons/fi";
+
 import Logo from "../../layout/Logo.js";
 import Spinner from "../../libs/Spinner.js";
 
@@ -23,7 +25,7 @@ export default function SignUpPage() {
     setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
   }
 
-  async function SignUpDataToAPI(e) {
+  async function SignUp(e) {
     //sending all the data to api and redirectioning user to sign-in page if successfull
     e.preventDefault();
     setIsLoading(true);
@@ -35,7 +37,7 @@ export default function SignUpPage() {
 
       setIsLoading(false);
       alert("Cadastro criado com sucesso!");
-      navigate("/sign-in");
+      navigate("/");
     } catch (error) {
       setIsLoading(false);
       alert(`Erro ao cadastrar: ${error}`);
@@ -46,62 +48,64 @@ export default function SignUpPage() {
     return (
       <>
         <Logo />
-        <Greeting>
+        <BackIcon>
+          <Link to="/sign-in">
+            <FiArrowLeft color={"#545454"} size={30}></FiArrowLeft>
+          </Link>
+        </BackIcon>
+
+        <h2>
           Olá!
-          <p>Preencha os dados para continuar</p>
-        </Greeting>
-        <Form onSubmit={SignUpDataToAPI}>
-          <Input
-            type="text"
-            placeholder="Seu nome"
-            name="name"
-            onChange={OnChange}
-            value={signUpData.name}
-            required
-          />
-          <Input
-            type="email"
-            placeholder="Seu melhor email"
-            name="email"
-            onChange={OnChange}
-            value={signUpData.email}
-            required
-          />
+          <h3>Preencha os dados para continuar</h3>
+        </h2>
+        <form onSubmit={SignUp}>
+          <InputContainer>
+            <input
+              type="text"
+              placeholder="Seu nome"
+              name="name"
+              onChange={OnChange}
+              value={signUpData.name}
+              required
+            />
+            <input
+              type="email"
+              placeholder="Seu melhor email"
+              name="email"
+              onChange={OnChange}
+              value={signUpData.email}
+              required
+            />
 
-          <Input
-            type="password"
-            placeholder="senha"
-            name="password"
-            onChange={OnChange}
-            value={signUpData.password}
-            required
-          />
-          <Input
-            type="password"
-            placeholder="Confirme a senha"
-            name="password_confirmation"
-            onChange={OnChange}
-            value={signUpData.password_confirmation}
-            required
-          />
-
-          <Button type="submit" disabled={isLoading}>
+            <input
+              type="password"
+              placeholder="senha"
+              name="password"
+              onChange={OnChange}
+              value={signUpData.password}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Confirme a senha"
+              name="password_confirmation"
+              onChange={OnChange}
+              value={signUpData.password_confirmation}
+              required
+            />
+          </InputContainer>
+          <button type="submit" disabled={isLoading}>
             {isLoading ? (
-              <Spinner
-                type="ThreeDots"
-                color="#FFFFFF"
-                height={50}
-                width={50}
-              />
+              <Spinner type="ThreeDots" color="#FFFFFF" width={50} />
             ) : (
               "Cadastrar"
             )}
-          </Button>
-        </Form>
-
-        <StyledLink to="/sign-in">
-          Já possui uma conta? <span>Entrar</span>
-        </StyledLink>
+          </button>
+        </form>
+        <p>
+          Já possui uma conta?
+          <Link to="/sign-in"> Entrar</Link>
+        </p>
       </>
     );
   }
@@ -112,65 +116,69 @@ export default function SignUpPage() {
 }
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   background-color: #efefef;
-`;
-
-const Greeting = styled.h2`
-  font: 700 34px "Quicksand", sans-serif;
-  color: #654c41;
-  margin-right: 80px;
-  p {
-    font: 400 12px "Quicksand", sans-serif;
-    color: #654c41;
-  }
-`;
-const Form = styled.form`
+  padding: 30px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin: 30px 0 25px;
-`;
 
-const Input = styled.input`
-  width: 300px;
-  height: 45px;
-  margin-bottom: 30px;
-  padding: 10px;
-  border: none;
-  border-radius: 50px;
-  background-color: "#FFFFFF;";
-  &::placeholder {
+  div {
+    margin-bottom: 40px;
+  }
+
+  h2 {
+    font: 700 40px "Quicksand", sans-serif;
+    color: #654c41;
+    margin-right: 80px;
+  }
+  h3 {
     font: 400 14px "Quicksand", sans-serif;
-    color: #737373;
-    padding-left: 50px;
+    color: #545454;
+    margin-right: 30px;
+  }
+  input {
+    height: 58px;
+    width: 326px;
+    border: none;
+    border-radius: 50px;
+    font: 400 20px "Quicksand", sans-serif;
+    padding-left: 60px;
+    margin-top: 20px;
+  }
+  input:focus {
+    outline: none;
+  }
+  button {
+    background-color: #654c41;
+    height: 58px;
+    width: 326px;
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    font: 700 20px "Quicksand", sans-serif;
+    cursor: pointer;
+  }
+  p {
+    margin-top: 10px;
+    font: 400 14px "Quicksand", sans-serif;
+    color: #545454;
+  }
+  a {
+    font: 700 14px "Quicksand", sans-serif;
+    color: #d57e52;
+    text-decoration: none;
   }
 `;
-
-const Button = styled.button`
-  width: 300px;
-  height: 45px;
-  border: none;
-  border-radius: 50px;
-  background: #654c41;
-
-  font: 700 20px "Quicksand", sans-serif;
-  text-align: center;
-  color: #ffffff;
+const BackIcon = styled.div`
+  margin-right: 320px;
 `;
-
-const StyledLink = styled(Link)`
-  width: 227px;
-  height: 18px;
-  font: 400 14px "Quicksand", sans-serif;
-  text-decoration: none;
-  color: #545454;
-  span {
-    color: #d57e52;
-    font-weight: 700;
+const InputContainer = styled.div`
+  position: relative;
+  div {
+    top: 17px;
+    left: 18px;
+    position: absolute;
+    margin: 0px;
   }
 `;
