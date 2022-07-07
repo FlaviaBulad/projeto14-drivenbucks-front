@@ -2,8 +2,11 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-
+import {BiArrowBack} from "react-icons/bi";
+import { IconContext } from "react-icons";
 import Logo from "../../layout/Logo.js";
+
+
 
 export default function SignInPage() {
   const [userData, setUserData] = useState({
@@ -21,32 +24,38 @@ export default function SignInPage() {
     });
   };
     
-  async function login(e){
+  function login(e){
     e.preventDefault();
     setLoading(true);
-    
-    try {
-      const response = await axios.post("https://drivenbucks.herokuapp.com/sign-in",userData);
-      localStorage.setItem("token", response.data);
+    const promise = axios.post("https://drivenbucks.herokuapp.com/sign-in",userData); 
+   
+    promise.then(response =>{
+      localStorage.setItem("token", response.data)
       setLoading(false);
-      navigate("/main");
-    } catch (error) {
-     console.error(error.response);
-      
-    }
+      navigate("/main/");
+    })
+    .catch(error => {
+      console.log(error);
+    })
 
-  }  
+  }
+  console.log(userData);  
   return (
     <Container>
       <Logo></Logo>
-      voltar
-      <span>Ola</span>
+      <IconContext.Provider value={{ size:"2rem", className: "global-class-name" }}>
+      
+      <Link style={{color: "#545454"}} to="/"><BiArrowBack /></Link>
+      </IconContext.Provider> 
+      
+      <h2>Ola!</h2>
       <span>entre para continuar</span>
-      <form>
+      <form onSubmit={login}>
         <input onChange={handleForm} value={userData.email} name="email" type="email" placeholder="E-mail"></input>
         <input onChange={handleForm} value={userData.password} name="password" type="password" placeholder="Senha"></input>
         <button onClick={login}>Entrar</button>
       </form>
+      <p>Novo por aqui? <Link to="/sign-up/">Cadastra-se</Link></p>
     </Container>
   )
 };
@@ -54,6 +63,57 @@ const Container = styled.div`
   background-color:#EFEFEF;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  padding 0 30px;
+  height: 100vh;
+  div{
+    margin-top: 30px;
+    margin-bottom:40px;
+  };
+
+  
+  h2{
+    font: 700 40px 'Quicksand', sans-serif;
+    color: #654c41;
+    align-self: flex-start;
+  };
+
+  span{
+    
+    font: 400 14px 'Quicksand', sans-serif;
+    color: #545454;
+    align-self: flex-start;
+  };
+  input{
+    margin-top: 40px;
+    height: 58px;
+    width: 326px;
+    border: none;
+    border-radius: 50px;
+    font: 400 20px 'Quicksand', sans-serif;
+    padding-left: 20px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,.2);
+  };
+  button{
+    margin-top: 40px;
+    background-color:  #654c41;
+    height: 58px;
+    width: 326px;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50px;
+    font: 700 20px 'Quicksand', sans-serif; 
+    cursor: pointer;
+  };
+  p{
+    margin-top: 35px;
+    font: 400 14px 'Quicksand', sans-serif;
+    color: #545454;
+  };
+  a{
+    align-self: flex-start;
+    color: #d57e52;
+  };
+  
+  
 `
