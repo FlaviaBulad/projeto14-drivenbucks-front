@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import {BiArrowBack} from "react-icons/bi";
+import {FiArrowLeft,FiMail,FiLock} from "react-icons/fi";
 import { IconContext } from "react-icons";
 import Logo from "../../layout/Logo.js";
 
@@ -45,14 +45,29 @@ export default function SignInPage() {
       <Logo></Logo>
       <IconContext.Provider value={{ size:"2rem", className: "global-class-name" }}>
       
-      <Link style={{color: "#545454"}} to="/"><BiArrowBack /></Link>
+      <Link style={{color: "#545454"}} to="/"><FiArrowLeft/></Link>
       </IconContext.Provider> 
       
       <h2>Ola!</h2>
       <span>entre para continuar</span>
       <form onSubmit={login}>
-        <input onChange={handleForm} value={userData.email} name="email" type="email" placeholder="E-mail"></input>
-        <input onChange={handleForm} value={userData.password} name="password" type="password" placeholder="Senha"></input>
+        <ContainerInput>
+          <div>
+            <IconContext.Provider value={{ size:"1.5rem", color:"#545454", className: "global-class-name" }}>
+              <FiMail> </FiMail>
+            </IconContext.Provider>
+          </div>
+          <input onChange={handleForm} value={userData.email} name="email" type="email" placeholder="E-mail"></input>
+        </ContainerInput>
+        <ContainerInput>
+          <div>
+            <IconContext.Provider value={{ size:"1.5rem", color:"#545454", className: "global-class-name" }}>
+              <FiLock></FiLock>
+            </IconContext.Provider>
+          </div>
+          <input onChange={handleForm} value={userData.password} name="password" type="password" placeholder="Senha"></input>
+        </ContainerInput>
+        
         <button onClick={login}>Entrar</button>
       </form>
       <p>Novo por aqui? <Link to="/sign-up/">Cadastra-se</Link></p>
@@ -85,17 +100,19 @@ const Container = styled.div`
     align-self: flex-start;
   };
   input{
-    margin-top: 40px;
     height: 58px;
     width: 326px;
     border: none;
     border-radius: 50px;
     font: 400 20px 'Quicksand', sans-serif;
-    padding-left: 20px;
+    padding-left: 60px;
     box-shadow: 2px 2px 2px rgba(0,0,0,.2);
   };
+  input:focus{
+    outline: none;
+  }
   button{
-    margin-top: 40px;
+    
     background-color:  #654c41;
     height: 58px;
     width: 326px;
@@ -116,4 +133,13 @@ const Container = styled.div`
   };
   
   
+`
+const ContainerInput = styled.div`
+  position: relative;
+  div{
+    top:17px;
+    left:18px;
+    position: absolute;
+    margin: 0px;
+  };
 `
