@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import axios from "axios";
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -9,37 +10,30 @@ import Logo from "../../layout/Logo.js";
 import Spinner from "../../libs/Spinner.js";
 
 export default function SignUpPage() {
-  const signUpDataObject = {
-    name: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-  };
-
   const navigate = useNavigate();
 
-  const [signUpData, setSignUpData] = useState(signUpDataObject);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [isLoading, setIsLoading] = useState(false); //loader spinner state
 
-  function OnChange(e) {
-    setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
-  }
-
-  async function SignUp(e) {
-    //sending all the data to api and redirectioning user to sign-in page if successfull
+  async function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
 
+    const body = { name, email, password, confirmPassword };
+
     try {
-      await axios.post("https://drivenbucks.herokuapp.com/sign-up", {
-        ...signUpData,
-      });
+      await axios.post("https://drivenbucks.herokuapp.com/sign-up", body);
 
       setIsLoading(false);
       alert("Cadastro criado com sucesso!");
-      navigate("/");
+      navigate("/sign-in");
     } catch (error) {
       setIsLoading(false);
+
       alert(`Erro ao cadastrar: ${error}`);
     }
   }
@@ -58,7 +52,7 @@ export default function SignUpPage() {
           Olá!
           <h3>Preencha os dados para continuar</h3>
         </h2>
-        <form onSubmit={SignUp}>
+        <form onSubmit={handleSubmit}>
           <InputContainer>
             <div className="=user">
               <FiUser color={"#654C41"} size={24}></FiUser>
@@ -66,9 +60,7 @@ export default function SignUpPage() {
             <input
               type="text"
               placeholder="Seu nome"
-              name="name"
-              onChange={OnChange}
-              value={signUpData.name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
             <div className="=email">
@@ -77,9 +69,7 @@ export default function SignUpPage() {
             <input
               type="email"
               placeholder="Seu melhor email"
-              name="email"
-              onChange={OnChange}
-              value={signUpData.email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
             <div className="=password">
@@ -88,9 +78,7 @@ export default function SignUpPage() {
             <input
               type="password"
               placeholder="Senha"
-              name="password"
-              onChange={OnChange}
-              value={signUpData.password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <div className="=confirm-password">
@@ -99,9 +87,7 @@ export default function SignUpPage() {
             <input
               type="password"
               placeholder="Confirme a senha"
-              name="password_confirmation"
-              onChange={OnChange}
-              value={signUpData.password_confirmation}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           </InputContainer>
@@ -129,13 +115,13 @@ export default function SignUpPage() {
 const Container = styled.div`
   background-color: #efefef;
   padding: 30px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   div {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 
   h2 {
