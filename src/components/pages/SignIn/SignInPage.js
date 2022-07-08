@@ -38,7 +38,10 @@ export default function SignInPage() {
     })
     .catch(error => {
       console.log(error);
-    })
+      const message = error.response.data
+      alert(message);
+      setLoading(false);
+    });
 
   }
   console.log(userData);  
