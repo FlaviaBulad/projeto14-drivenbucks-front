@@ -1,13 +1,10 @@
-export default function MainPage() {
-  return <h1>Página principal com os produtos</h1>;
-}
 import styled from "styled-components";
 
 import { FiMenu,FiLogOut } from "react-icons/fi";
 
 import Logo from "../../layout/Logo";
 import banner from "../../../assets/images/layout/banner.png"
-import CardProduct from "../../layout/CardProduct.js"
+
 export default function MainPage() {
   return (
     <>
