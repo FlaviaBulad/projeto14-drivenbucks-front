@@ -9,9 +9,15 @@ import banner from "../../../assets/images/layout/banner.png"
 export default function MainPage() {
   
   const [product, setProduct] = useState([]); 
-  
+  const token = localStorage.getItem("token");
+  const config = {
+                  headers:{
+                            "Authorization": `Bearer ${token}` 
+                  }
+  };
   useEffect(()=>{
-    const promise = axios.get("https://drivenbucks.herokuapp.com/products");
+
+    const promise = axios.get("https://drivenbucks.herokuapp.com/products",config);
     promise.then(responde =>{
       setProduct(responde.data)
     }).catch(error=>{
