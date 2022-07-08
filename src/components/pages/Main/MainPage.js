@@ -5,7 +5,28 @@ import { FiMenu,FiLogOut } from "react-icons/fi";
 import Logo from "../../layout/Logo";
 import banner from "../../../assets/images/layout/banner.png"
 import CardProduct from "../../layout/CardProduct.js"
+
+const produtcs =[{
+  _id: "objectId(a12313t13i1yoi31u3o1-01)",
+  image: "https://cooknenjoy.com/wp-content/uploads/2022/04/torta-de-limao-1800x1351.jpg",
+  title: "Torda de limão",
+  description: "Deliciosa torta com casquinha de boicoito e raspas de limão",
+  rate: "* * * * *",
+  price: "15,50"
+},
+{
+  _id: "objectId(a12313t13i1yoi31u3o1-02)",
+  image: "https://t2.rg.ltmcdn.com/pt/posts/2/9/9/bolo_de_chocolate_cremoso_5992_orig.jpg",
+  title: "Bolo de chocolate",
+  description: "Delicioso de chocolate com recheio de chocolate e granulado",
+  rate: "* * * * *",
+  price: "15,50"
+}
+]
 export default function MainPage() {
+  
+ 
+  
   return (
     <>
     <ContainerHeader>
@@ -20,7 +41,15 @@ export default function MainPage() {
     <Container>
       <Banner src={banner} alt="banner"/>
       <ContainerProducts>
-        <CardProduct></CardProduct>
+        {produtcs.map((item, index)=>
+        <CardProduct key={index} 
+          image={item.image} 
+          title={item.title} 
+          description={item.description} 
+          price={item.price}
+          rate={item.rate}
+          id={item._id}
+        ></CardProduct>)}
       </ContainerProducts>
       
     </Container>
@@ -71,7 +100,7 @@ const Container = styled.div`
     margin-top: 220px;
     display: flex;
     flex-direction: column;
-    
+    gap: 15px;
 
   `
   

@@ -1,20 +1,47 @@
 import styled from "styled-components";
+import axios from "axios";
 
-import apple from "../../assets/images/products/apple-pie.png";
-export default function CardProduct({image, title, description, rate, }){
-    return (
+export default function CardProduct({id,image, title, description, price, rate }){
+  
+  function sendProductToBasket(){
+    const produtcs ={
+      id,
+      image,
+      title,
+      description,
+      price
+    };
+    
+    const token = localStorage.getItem("token");
+
+    const config = {
+      headers : {
+                "Authorization": `Bearer ${token}`
+                }
+    };
+
+    const promise = axios.post("https://drivenbucks.herokuapp.com/basket", produtcs, config);
+    promise.then(reponse=>{
+      console.log(reponse);
+    }).catch(error =>{
+      console.log(error.reponse);
+    })
+    
+  };
+
+  return (
         <Card>
-        <img src={apple} />
+        <img src={image} />
         <div>
           <div>
-            <h2>Torta de maçã</h2>
-            <p>Deliciosa, perfeita para compartilhar com a familia!</p>
-            <span>* * * * *</span>
+            <h2>{title}</h2>
+            <p>{description}</p>
+            <span>{rate}</span>
           </div>
           
           <ValueContainer>
-            <span>R$21,50</span>
-            <button>Add to cart</button>
+            <span>R${price}</span>
+            <button onClick={sendProductToBasket}>Add to cart</button>
           </ValueContainer>
             
         </div>
@@ -24,7 +51,6 @@ export default function CardProduct({image, title, description, rate, }){
 const Card = styled.div`
     width: 100%;
     height: 150px;
-    /* background-color: #EFEFEF; */
     display: flex;
     gap: 10px;
     img{
