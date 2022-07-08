@@ -7,7 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FiArrowLeft, FiUser, FiMail, FiLock } from "react-icons/fi";
 
 import Logo from "../../layout/Logo.js";
-import Spinner from "../../libs/Spinner.js";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
@@ -93,7 +94,14 @@ export default function SignUpPage() {
           </InputContainer>
           <button type="submit" disabled={isLoading}>
             {isLoading ? (
-              <Spinner type="ThreeDots" color="#FFFFFF" width={50} />
+              <StyledSpinner>
+                <ThreeDots
+                  type="ThreeDots"
+                  color="#FFFFFF"
+                  height={40}
+                  width={40}
+                />
+              </StyledSpinner>
             ) : (
               "Cadastrar"
             )}
@@ -179,4 +187,11 @@ const InputContainer = styled.div`
     left: 18px;
     position: absolute;
   }
+`;
+
+const StyledSpinner = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
 `;
