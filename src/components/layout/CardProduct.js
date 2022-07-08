@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import apple from "../../assets/images/products/apple-pie.png";
-export default function CardProduct(){
+export default function CardProduct({image, title, description, rate, }){
     return (
         <Card>
         <img src={apple} />
