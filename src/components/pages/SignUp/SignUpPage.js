@@ -49,7 +49,7 @@ export default function SignUpPage() {
       <>
         <Logo />
         <BackIcon>
-          <Link to="/sign-in">
+          <Link to="/">
             <FiArrowLeft color={"#545454"} size={30}></FiArrowLeft>
           </Link>
         </BackIcon>
@@ -60,6 +60,9 @@ export default function SignUpPage() {
         </h2>
         <form onSubmit={SignUp}>
           <InputContainer>
+            <div className="=user">
+              <FiUser color={"#654C41"} size={24}></FiUser>
+            </div>
             <input
               type="text"
               placeholder="Seu nome"
@@ -68,6 +71,9 @@ export default function SignUpPage() {
               value={signUpData.name}
               required
             />
+            <div className="=email">
+              <FiMail color={"#654C41"} size={24}></FiMail>
+            </div>
             <input
               type="email"
               placeholder="Seu melhor email"
@@ -76,15 +82,20 @@ export default function SignUpPage() {
               value={signUpData.email}
               required
             />
-
+            <div className="=password">
+              <FiLock color={"#654C41"} size={24}></FiLock>
+            </div>
             <input
               type="password"
-              placeholder="senha"
+              placeholder="Senha"
               name="password"
               onChange={OnChange}
               value={signUpData.password}
               required
             />
+            <div className="=confirm-password">
+              <FiLock color={"#654C41"} size={24}></FiLock>
+            </div>
             <input
               type="password"
               placeholder="Confirme a senha"
@@ -176,9 +187,10 @@ const BackIcon = styled.div`
 const InputContainer = styled.div`
   position: relative;
   div {
-    top: 17px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
     left: 18px;
     position: absolute;
-    margin: 0px;
   }
 `;
