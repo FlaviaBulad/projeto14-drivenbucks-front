@@ -16,7 +16,7 @@ export default function SignUpPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirm_password, setConfirm_password] = useState("");
 
   const [isLoading, setIsLoading] = useState(false); //loader spinner state
 
@@ -24,7 +24,7 @@ export default function SignUpPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    const body = { name, email, password, confirmPassword };
+    const body = { name, email, password, confirm_password };
 
     try {
       await axios.post("https://drivenbucks.herokuapp.com/sign-up", body);
@@ -88,7 +88,7 @@ export default function SignUpPage() {
             <input
               type="password"
               placeholder="Confirme a senha"
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirm_password(e.target.value)}
               required
             />
           </InputContainer>
