@@ -1,11 +1,31 @@
 import styled from "styled-components";
-
+import { useState } from "react";
+import axios from "axios";
 import { FiMenu,FiLogOut } from "react-icons/fi";
 
 import Logo from "../../layout/Logo";
 import banner from "../../../assets/images/layout/banner.png"
-
+ 
 export default function MainPage() {
+  
+  const [product, sendProduct] = useState([]); 
+
+  function sendProduct(){
+    const token = localStorage.getItem("token");
+
+    const config = {
+        headers : {
+            "Authorization": `Bearer ${token}`
+        }
+      };   
+    const promise = axios.post("https://drivenbucks.herokuapp.com/basket",product,config);
+    promise.then(response =>{
+      console.log(response);
+    }).catch(error =>{
+      console.log(error.response);
+    });
+  };
+  
   return (
     <>
     <ContainerHeader>
