@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import { useState } from "react";
 
 import WelcomePage from "./components/pages/Welcome/WelcomePage";
@@ -11,13 +12,13 @@ import CheckoutPage from "./components/pages/Checkout/CheckoutPage";
 import "./assets/css/reset.css";
 import "./assets/css/index.css";
 
-import BasketContext from "./components/contexts/BasketContext";
+import UserContext from "./components/contexts/UserContext";
 
 function App() {
-  const [basket, setBasket] = useState(null);
+  const [user, setUser] = useState(null);
 
   return (
-    <BasketContext.Provider value={{ basket, setBasket }}>
+    <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<WelcomePage />} />
@@ -28,7 +29,7 @@ function App() {
           <Route path="/checkout/" element={<CheckoutPage />} />
         </Routes>
       </BrowserRouter>
-    </BasketContext.Provider>
+    </UserContext.Provider>
   );
 }
 
