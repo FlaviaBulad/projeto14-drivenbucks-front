@@ -10,24 +10,24 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { ThreeDots } from "react-loader-spinner";
 
 import Product from "./Product";
-import UserContext from "./components/contexts/UserContext";
+import { ProductsContext } from "../../contexts/ProductsContext";
 
 export default function BasketPage() {
-  const [products, setProducts] = useState([]);
-  const { user } = useContext(UserContext);
+  const [products, setProducts] = useContext(ProductsContext);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     async function getBasketData() {
       try {
         const response = await axios.get("http://localhost:5000/basket", {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         console.log(response);
         setProducts(response.data);
       } catch (error) {
-        alert("Erro ao pegar os produtos no carrinho!", error);
+        alert("Erro ao pegar os produtos do carrinho!", error);
       }
     }
 

@@ -12,13 +12,13 @@ import CheckoutPage from "./components/pages/Checkout/CheckoutPage";
 import "./assets/css/reset.css";
 import "./assets/css/index.css";
 
-import UserContext from "./components/contexts/UserContext";
+import { ProductsContext } from "./components/contexts/ProductsContext";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [products, setProducts] = useState([]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <ProductsContext.Provider value={{ products, setProducts }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<WelcomePage />} />
@@ -29,7 +29,7 @@ function App() {
           <Route path="/checkout/" element={<CheckoutPage />} />
         </Routes>
       </BrowserRouter>
-    </UserContext.Provider>
+    </ProductsContext.Provider>
   );
 }
 
