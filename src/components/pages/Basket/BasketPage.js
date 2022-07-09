@@ -31,35 +31,29 @@ export default function BasketPage() {
   //   getBasketData();
   // }, []);
 
-  const products = [
-    {
-      name: "café expresso",
-      price: "9.10",
-    },
-    {
-      name: "bolo de banana",
-      price: "14.00",
-    },
-    {
-      name: "torta de limão",
-      price: "25.50",
-    },
-  ];
+  const products = [];
 
   function buildBasket() {
     if (products.length > 0) {
       return products.map((product, index) => {
         const { name, price } = product;
-        return <Product key={index} name={name} price={price} />;
+        return (
+          <>
+            <Product key={index} name={name} price={price} />
+            <Titles>
+              <span>Produtos</span> <span>Valor</span>
+            </Titles>
+          </>
+        );
       });
     } else {
-      return <p>Seu carrinho está vazio!</p>;
+      return <EmptyBasket>Seu carrinho está vazio!</EmptyBasket>;
     }
   }
 
   const basketSession = buildBasket();
 
-  function buildBalance() {
+  function buildTotal() {
     let initialValue = 0;
 
     if (products.length > 0) {
@@ -72,7 +66,7 @@ export default function BasketPage() {
     }
   }
 
-  const balanceSection = buildBalance();
+  const totalSection = buildTotal();
 
   function buildBasketPage() {
     return (
@@ -86,16 +80,12 @@ export default function BasketPage() {
           <h1>Carrinho</h1>
         </StyledHeader>
 
-        <Titles>
-          <span>Produtos</span> <span>Valor</span>
-        </Titles>
-
         <BasketContent>{basketSession}</BasketContent>
 
         <StyledFooter>
           <div className="total">
             <span>Total </span>
-            <span>R${balanceSection}</span>
+            <span>R${totalSection}</span>
           </div>
           <Link to="/checkout">
             <button>Pagar</button>
@@ -115,6 +105,15 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+`;
+
+const EmptyBasket = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 200px;
+  font: 700 22px "Quicksand", sans-serif;
+  color: #000000;
 `;
 
 const Titles = styled.div`
@@ -139,6 +138,9 @@ const StyledHeader = styled.div`
   align-items: center;
   border-bottom: 2px solid #efefef;
   h1 {
+    display: flex;
+    align-items: center;
+    justify-content: end;
     font: 700 36px "Open Sans", sans-serif;
     color: #654c41;
   }
