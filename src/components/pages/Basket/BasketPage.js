@@ -1,37 +1,41 @@
 import styled from "styled-components";
 import axios from "axios";
 
-import { useContext, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import { FiArrowLeft } from "react-icons/fi";
 
 import Product from "./Product";
-// import { ProductsContext } from "../../contexts/ProductsContext";
+import { ProductsContext } from "../../contexts/ProductsContext";
+import { TotalOrderContext } from "../../contexts/TotalOrderContext";
 
 export default function BasketPage() {
-  // const [products, setProducts] = useContext(ProductsContext);
-  // const token = localStorage.getItem("token");
+  const [products, setProducts] = useContext(ProductsContext);
+  const [totalOrder, setTotalOrder] = useContext(TotalOrderContext);
 
-  // useEffect(() => {
-  //   async function getBasketData() {
-  //     try {
-  //       const response = await axios.get("http://localhost:5000/basket", {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       console.log(response);
-  //       setProducts(response.data);
-  //     } catch (error) {
-  //       alert("Erro ao pegar os produtos do carrinho!", error);
-  //     }
-  //   }
+  const token = localStorage.getItem("token");
 
-  //   getBasketData();
-  // }, []);
+  useEffect(() => {
+    async function getBasketData() {
+      try {
+        const response = await axios.get(
+          "https://drivenbucks.herokuapp.com/basket",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+        setProducts(response.data);
+      } catch (error) {
+        alert("Erro ao pegar os produtos do carrinho!", error);
+      }
+    }
 
-  const products = [];
+    getBasketData();
+  }, []);
 
   function buildBasket() {
     if (products.length > 0) {
@@ -60,7 +64,8 @@ export default function BasketPage() {
       const sum = products
         .map((product) => Number(product.price))
         .reduce((prev, curr) => parseFloat(prev + curr, 0));
-      return sum.toFixed(2);
+      setTotalOrder(sum.toFixed(2));
+      return totalOrder;
     } else {
       return initialValue;
     }
