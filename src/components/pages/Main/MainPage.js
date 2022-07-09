@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 import { FiMenu,FiLogOut } from "react-icons/fi";
 
 import Logo from "../../layout/Logo";
 import banner from "../../../assets/images/layout/banner.png"
- 
+import CardProduct from "../../layout/CardProduct.js"
+
 export default function MainPage() {
   
   const [product, setProduct] = useState([]); 
@@ -23,7 +25,7 @@ export default function MainPage() {
     }).catch(error=>{
       console.log(error.response);
     })
-  },[])
+  },[]);
   return (
     <>
     <ContainerHeader>
@@ -38,7 +40,16 @@ export default function MainPage() {
     <Container>
       <Banner src={banner} alt="banner"/>
       <ContainerProducts>
-        {/* Aqui vai entrar o component que vai renderizar os cards dos produtos */}
+        {produtcs.map((item, index)=>
+        <CardProduct key={index} 
+          image={item.image} 
+          title={item.title} 
+          description={item.description} 
+          price={item.price}
+          rate={item.rate}
+          id={item._id}
+        ></CardProduct>)}
+
       </ContainerProducts>
       
     </Container>
@@ -46,7 +57,7 @@ export default function MainPage() {
     </>
     
   );
-}
+};
 const Container = styled.div`
   position: relative;
   background-color:#FFFFFF;
@@ -89,7 +100,7 @@ const Container = styled.div`
     margin-top: 220px;
     display: flex;
     flex-direction: column;
-    
+    gap: 15px;
 
   `
   
