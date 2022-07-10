@@ -32,7 +32,8 @@ export default function SignInPage() {
     const promise = axios.post("https://drivenbucks.herokuapp.com/sign-in",userData); 
    
     promise.then(response =>{
-      localStorage.setItem("token", response.data)
+      localStorage.setItem("token", response.data.token);
+      console.log(response.data.token);
       setLoading(false);
       navigate("/main/");
     })
