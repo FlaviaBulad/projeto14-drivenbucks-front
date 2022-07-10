@@ -7,9 +7,11 @@ import { Link } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
 import Product from "./Product";
+import CheckoutPage from "../Checkout/CheckoutPage";
 
 export default function BasketPage() {
   const [products, setProducts] = useState([]);
+  const [totalValue, setTotalValue] = useState(0);
 
   const token = localStorage.getItem("token");
 
@@ -58,7 +60,8 @@ export default function BasketPage() {
       const sum = products
         .map((product) => Number(product.price))
         .reduce((prev, curr) => parseFloat(prev + curr, 0));
-      return sum.toFixed(2);
+      setTotalValue(sum.toFixed(2));
+      return totalValue;
     } else {
       return initialValue;
     }
