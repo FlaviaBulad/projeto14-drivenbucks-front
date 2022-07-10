@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -13,6 +14,7 @@ export default function MainPage() {
   const [products, setProducts] = useState([]);
   const [productsOnTheBasket, setProductsOnTheBasket] = useState(0);
 
+  
   const token = localStorage.getItem("token");
   const config = {
     headers: {
@@ -60,10 +62,13 @@ export default function MainPage() {
             ></CardProduct>)}
             
         </ContainerProducts>
-        <Basket>
-              <div>{productsOnTheBasket}</div>
-              <div><FiShoppingCart color={"#FFFFFF"} size={"50px"}></FiShoppingCart></div>
-        </Basket>
+        <Link to="/basket/">
+          <Basket>
+            <div>{productsOnTheBasket}</div>
+            <div><FiShoppingCart color={"#FFFFFF"} size={"50px"}></FiShoppingCart></div>
+          </Basket>
+        </Link>
+        
       </Container>
 
     </>
