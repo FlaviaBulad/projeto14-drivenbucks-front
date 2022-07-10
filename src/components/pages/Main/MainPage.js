@@ -10,7 +10,7 @@ import CardProduct from "../../layout/CardProduct.js"
 
 export default function MainPage() {
   
-  const [product, setProduct] = useState([]); 
+  const [products, setProducts] = useState([]); 
   const token = localStorage.getItem("token");
   const config = {
                   headers:{
@@ -21,7 +21,7 @@ export default function MainPage() {
 
     const promise = axios.get("https://drivenbucks.herokuapp.com/products",config);
     promise.then(responde =>{
-      setProduct(responde.data)
+      setProducts(responde.data)
     }).catch(error=>{
       console.log(error.response);
     })
@@ -40,7 +40,7 @@ export default function MainPage() {
     <Container>
       <Banner src={banner} alt="banner"/>
       <ContainerProducts>
-        {produtcs.map((item, index)=>
+        {products.map((item, index)=>
         <CardProduct key={index} 
           image={item.image} 
           title={item.title} 
