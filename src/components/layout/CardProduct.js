@@ -53,6 +53,7 @@ const Card = styled.div`
     height: 150px;
     display: flex;
     gap: 10px;
+    padding-bottom: 30px;
     img{
       height: 150px;
       width:150px;
@@ -61,23 +62,22 @@ const Card = styled.div`
     
     h2{
       margin-bottom: 10px;
-      font: 700 16px 'Quicksand', sans-serif;
-        
+      font: 700 12px "Open Sans", sans-serif;
     };
     p{
       margin-bottom: 10px;
-      font: 700 10px 'Quicksand', sans-serif;
+      font: 400 10px "Open Sans", sans-serif;
     };
 `
  const ValueContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   span{
-    font: 700 22px 'Quicksand', sans-serif;
+    font: 700 16px "Open Sans", sans-serif;
   };
   button{
     background-color:  #654c41;
@@ -86,7 +86,7 @@ const Card = styled.div`
     color: #FFFFFF;
     border: none;
     border-radius: 5px;
-    font: 700 12px 'Quicksand', sans-serif; 
+    font: 700 12px "Open Sans", sans-serif;
     cursor: pointer;
   }
  `

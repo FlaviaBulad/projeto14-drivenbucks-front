@@ -2,59 +2,65 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { FiMenu,FiLogOut } from "react-icons/fi";
+import { FiMenu, FiLogOut } from "react-icons/fi";
 
 import Logo from "../../layout/Logo";
 import banner from "../../../assets/images/layout/banner.png"
 import CardProduct from "../../layout/CardProduct.js"
 
 export default function MainPage() {
-  
-  const [products, setProducts] = useState([]); 
+
+  const [products, setProducts] = useState([]);
   const token = localStorage.getItem("token");
   const config = {
-                  headers:{
-                            "Authorization": `Bearer ${token}` 
-                  }
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
   };
-  useEffect(()=>{
-    const promise = axios.get("https://drivenbucks.herokuapp.com/products",config);
-    promise.then(responde =>{
+  useEffect(() => {
+    const promise = axios.get("http://localhost:5000/products", config);
+    promise.then(responde => {
       setProducts(responde.data)
-    }).catch(error=>{
-      console.log(error.response);
+    }).catch(error => {
+      console.log("deu ruim");
     })
-  },[]);
+  }, []);
+
+  console.log(products)
+  if (products.length != 0) {
+    console.log(products);
+  }
+
   return (
     <>
-    <ContainerHeader>
-        <BackIcon>
-          <FiMenu color={"#FFFFFF"} size={30}></FiMenu>
-        </BackIcon>
-        <Logo></Logo>
-        <BackIcon>
-          <FiLogOut color={"#654C41"} size={30}></FiLogOut>
-        </BackIcon>
-      </ContainerHeader>
-    <Container>
-      <Banner src={banner} alt="banner"/>
-      <ContainerProducts>
-        {products.map((item, index)=>
-        <CardProduct key={index} 
-          image={item.image} 
-          title={item.title} 
-          description={item.description} 
-          price={item.price}
-          rate={item.rate}
-          id={item._id}
-        ></CardProduct>)}
+      <Container>
+        <ContainerHeader>
+          <BackIcon>
+            <FiMenu color={"#FFFFFF"} size={30}></FiMenu>
+          </BackIcon>
+          <Logo></Logo>
+          <BackIcon>
+            <FiLogOut color={"#654C41"} size={30}></FiLogOut>
+          </BackIcon>
+        </ContainerHeader>
+        <Banner src={banner} alt="banner" />
+        <ContainerProducts>
+          {products.map((item, index) =>
+            <CardProduct key={index}
+              image={item.image}
+              title={item.title}
+              description={item.description}
+              price={item.price}
+              rate={item.rate}
+              id={item._id}
+            ></CardProduct>)}
 
-      </ContainerProducts>
-      
-    </Container>
-    
+        </ContainerProducts>
+
+      </Container>
+
     </>
-    
+
   );
 };
 const Container = styled.div`
@@ -62,13 +68,15 @@ const Container = styled.div`
   background-color:#FFFFFF;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   padding 0 30px;
   height: 100vh;
-  
+  width:100%;
   `
-  const ContainerHeader = styled.div`
-    padding 10px 30px;
+const ContainerHeader = styled.div`
+    position:fixed;
+    z-index:1;
+    padding 10px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -80,7 +88,7 @@ const Container = styled.div`
       background-color: #FFFFFF;
     }
   `
-  const BackIcon = styled.div`
+const BackIcon = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -88,18 +96,17 @@ const Container = styled.div`
     border-radius: 4px;
 
   `
-  const Banner = styled.img`
+const Banner = styled.img`
     position: absolute;
-    right: 30px;
-    top: -65px;
-    width:353px;
+    right: 30;
+    top: 20px;
+    width:325px;
   
   `
-  const ContainerProducts = styled.div`
-    margin-top: 220px;
+const ContainerProducts = styled.div`
+    margin-top: 285px;
     display: flex;
     flex-direction: column;
     gap: 15px;
 
   `
-  
