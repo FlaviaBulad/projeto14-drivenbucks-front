@@ -18,7 +18,7 @@ export default function MainPage() {
     }
   };
   useEffect(() => {
-    const promise = axios.get("http://localhost:5000/products", config);
+    const promise = axios.get("https://drivenbucks.herokuapp.com/products", config);
     promise.then(responde => {
       setProducts(responde.data)
     }).catch(error => {
