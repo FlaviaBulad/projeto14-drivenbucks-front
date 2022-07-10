@@ -27,25 +27,15 @@ export default function SignInPage() {
   function login(e) {
     e.preventDefault();
     setLoading(true);
-
-    const promise = axios.post("https://drivenbucks.herokuapp.com/sign-in",userData); 
-   
-    promise.then(response =>{
-      localStorage.setItem("token", response.data.token);
-      console.log(response.data.token);
-      setLoading(false);
-      navigate("/main/");
-    })
-    .catch(error => {
-      console.log(error);
-      const message = error.response.data
-      alert(message);
-      setLoading(false);
-    });
+    const promise = axios.post(
+      "https://drivenbucks.herokuapp.com/sign-in",
+      userData
+    );
 
     promise
       .then((response) => {
-        localStorage.setItem("token", response.data);
+        localStorage.setItem("token", response.data.token);
+        console.log(response.data.token);
         setLoading(false);
         navigate("/main/");
       })
