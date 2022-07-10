@@ -1,18 +1,15 @@
 import styled from "styled-components";
 import axios from "axios";
 
-import { useContext, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { FiArrowLeft } from "react-icons/fi";
 
 import Product from "./Product";
-import { ProductsContext } from "../../contexts/ProductsContext";
-import { TotalOrderContext } from "../../contexts/TotalOrderContext";
 
 export default function BasketPage() {
-  const [products, setProducts] = useContext(ProductsContext);
-  const [totalOrder, setTotalOrder] = useContext(TotalOrderContext);
+  const [products, setProducts] = useState([]);
 
   const token = localStorage.getItem("token");
 
@@ -64,8 +61,7 @@ export default function BasketPage() {
       const sum = products
         .map((product) => Number(product.price))
         .reduce((prev, curr) => parseFloat(prev + curr, 0));
-      setTotalOrder(sum.toFixed(2));
-      return totalOrder;
+      return sum.toFixed(2);
     } else {
       return initialValue;
     }
