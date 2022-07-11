@@ -3,10 +3,19 @@ import styled from "styled-components";
 import { FiArrowLeft } from "react-icons/fi";
 
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { useNavigate } from "react-router";
 
 import PaymentMethod from "./PaymentMethod";
 
+import BasketProductsContext from "../../../contexts/BasketProductsContext";
+import TotalValueContext from "../../../contexts/TotalValueContext";
+
 export default function CheckoutPage() {
+  const { setProducts } = useContext(BasketProductsContext);
+  const { totalValue, setTotalValue } = useContext(TotalValueContext);
+  const navigate = useNavigate();
+
   function buildCheckout() {
     return (
       <>
@@ -24,13 +33,20 @@ export default function CheckoutPage() {
         <StyledFooter>
           <div className="total">
             <span>Total </span>
-            <span>R$0</span>
+            <span>R${totalValue}</span>
           </div>
 
-          <button>Finalizar Pedido</button>
+          <button onClick={finishOrder}>Finalizar Pedido</button>
         </StyledFooter>
       </>
     );
+  }
+
+  function finishOrder() {
+    alert("Pedido Finalizado com sucesso!");
+    setTotalValue(0);
+    setProducts([]);
+    navigate("/");
   }
 
   const renderCheckoutPage = buildCheckout();

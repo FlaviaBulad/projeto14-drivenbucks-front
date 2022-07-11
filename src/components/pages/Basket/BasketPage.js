@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import axios from "axios";
 
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { FiArrowLeft } from "react-icons/fi";
 
 import Product from "./Product";
-import CheckoutPage from "../Checkout/CheckoutPage";
+
+import BasketProductsContext from "../../../contexts/BasketProductsContext";
+import TotalValueContext from "../../../contexts/TotalValueContext";
 
 export default function BasketPage() {
-  const [products, setProducts] = useState([]);
-  const [totalValue, setTotalValue] = useState(0);
+  const { products, setProducts } = useContext(BasketProductsContext);
+  const { totalValue, setTotalValue } = useContext(TotalValueContext);
 
   const token = localStorage.getItem("token");
 

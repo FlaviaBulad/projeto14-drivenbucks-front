@@ -36,7 +36,6 @@ const List = styled.div`
   align-items: center;
   justify-content: center;
 .options{
-
   margin-top: 20px;
 }
   p{
@@ -45,8 +44,7 @@ const List = styled.div`
     color: #000000;
   }
   img {
-    width: 50%;
-    padding:5px;
+    width: 125px;
   }
   .clicked{
     border 2px solid lightgray;
