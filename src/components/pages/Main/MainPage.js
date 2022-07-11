@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ export default function MainPage() {
 
   const [products, setProducts] = useState([]);
   const [productsOnTheBasket, setProductsOnTheBasket] = useState(0);
-
+  const navigate = useNavigate();
   
   const token = localStorage.getItem("token");
   const config = {
@@ -34,7 +34,16 @@ export default function MainPage() {
   if (products.length != 0) {
     console.log(products);
   }
+  function logout(){
+    const promise = axios.delete("https://drivenbucks.herokuapp.com/logout", config);
+    promise.then(response =>{
+      console.log(response);
+      navigate("/");
+    }).catch(error => {
+      console.log(error);
+    });
 
+  };
   return (
     <>
       <Container>
@@ -44,7 +53,7 @@ export default function MainPage() {
           </BackIcon>
           <Logo></Logo>
           <BackIcon>
-            <FiLogOut color={"#654C41"} size={30}></FiLogOut>
+            <FiLogOut onClick={logout} color={"#654C41"} size={30}></FiLogOut>
           </BackIcon>
         </ContainerHeader>
         <Banner src={banner} alt="banner" />
@@ -106,7 +115,7 @@ const BackIcon = styled.div`
     justify-content: center;
     background-color: #654C41;
     border-radius: 4px;
-
+    cursor: pointer;
   `
 const Banner = styled.img`
     position: absolute;
