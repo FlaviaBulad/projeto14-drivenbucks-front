@@ -1,15 +1,18 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { FiMenu, FiLogOut } from "react-icons/fi";
+import { FiMenu, FiLogOut, FiShoppingCart } from "react-icons/fi";
 
 import Logo from "../../layout/Logo";
 import banner from "../../../assets/images/layout/banner.png";
-import CardProduct from "../../layout/CardProduct.js";
+import CardProduct from "./CardProduct.js";
 
 export default function MainPage() {
   const [products, setProducts] = useState([]);
+  const [productsOnTheBasket, setProductsOnTheBasket] = useState(0);
+
   const token = localStorage.getItem("token");
   const config = {
     headers: {
@@ -26,21 +29,27 @@ export default function MainPage() {
         setProducts(responde.data);
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log("deu ruim");
       });
   }, []);
+
+  console.log(products);
+  if (products.length != 0) {
+    console.log(products);
+  }
+
   return (
     <>
-      <ContainerHeader>
-        <BackIcon>
-          <FiMenu color={"#FFFFFF"} size={30}></FiMenu>
-        </BackIcon>
-        <Logo></Logo>
-        <BackIcon>
-          <FiLogOut color={"#654C41"} size={30}></FiLogOut>
-        </BackIcon>
-      </ContainerHeader>
       <Container>
+        <ContainerHeader>
+          <BackIcon>
+            <FiMenu color={"#FFFFFF"} size={30}></FiMenu>
+          </BackIcon>
+          <Logo></Logo>
+          <BackIcon>
+            <FiLogOut color={"#654C41"} size={30}></FiLogOut>
+          </BackIcon>
+        </ContainerHeader>
         <Banner src={banner} alt="banner" />
         <ContainerProducts>
           {products.map((item, index) => (
@@ -52,9 +61,19 @@ export default function MainPage() {
               price={item.price}
               rate={item.rate}
               id={item._id}
+              setProductsOnTheBasket={setProductsOnTheBasket}
+              productsOnTheBasket={productsOnTheBasket}
             ></CardProduct>
           ))}
         </ContainerProducts>
+        <Link to="/basket/">
+          <Basket>
+            <div>{productsOnTheBasket}</div>
+            <div>
+              <FiShoppingCart color={"#FFFFFF"} size={"50px"}></FiShoppingCart>
+            </div>
+          </Basket>
+        </Link>
       </Container>
     </>
   );
@@ -64,13 +83,15 @@ const Container = styled.div`
   background-color:#FFFFFF;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   padding 0 30px;
   height: 100vh;
-  
+  width:100%;
   `;
 const ContainerHeader = styled.div`
-    padding 10px 30px;
+    position:fixed;
+    z-index:1;
+    padding 10px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -91,13 +112,40 @@ const BackIcon = styled.div`
 `;
 const Banner = styled.img`
   position: absolute;
-  right: 30px;
-  top: -65px;
-  width: 353px;
+  right: 30;
+  top: 20px;
+  width: 325px;
 `;
 const ContainerProducts = styled.div`
-  margin-top: 220px;
+  margin-top: 285px;
   display: flex;
   flex-direction: column;
   gap: 15px;
+`;
+const Basket = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 20px;
+  right: 10px;
+  background-color: #ffc229;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  font-size: 26px;
+  color: #ffffff;
+  div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: red;
+  }
+  div:last-child {
+    margin-right: 10px;
+  }
 `;
