@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import axios from "axios";
 
-export default function CardProduct({id,image, title, description, price, rate }){
+export default function CardProduct({id,image, title, description, price, rate, productsOnTheBasket ,setProductsOnTheBasket }){
   
   function sendProductToBasket(){
     const produtcs ={
@@ -23,6 +23,8 @@ export default function CardProduct({id,image, title, description, price, rate }
     const promise = axios.post("https://drivenbucks.herokuapp.com/basket", produtcs, config);
     promise.then(reponse=>{
       console.log(reponse);
+
+      setProductsOnTheBasket( productsOnTheBasket = productsOnTheBasket + 1);
     }).catch(error =>{
       console.log(error.reponse);
     })

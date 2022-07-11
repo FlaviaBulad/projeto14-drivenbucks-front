@@ -1,16 +1,20 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { FiMenu, FiLogOut } from "react-icons/fi";
+import { FiMenu, FiLogOut,FiShoppingCart } from "react-icons/fi";
 
 import Logo from "../../layout/Logo";
 import banner from "../../../assets/images/layout/banner.png"
-import CardProduct from "../../layout/CardProduct.js"
+import CardProduct from "./CardProduct.js"
 
 export default function MainPage() {
 
   const [products, setProducts] = useState([]);
+  const [productsOnTheBasket, setProductsOnTheBasket] = useState(0);
+
+  
   const token = localStorage.getItem("token");
   const config = {
     headers: {
@@ -53,10 +57,18 @@ export default function MainPage() {
               price={item.price}
               rate={item.rate}
               id={item._id}
+              setProductsOnTheBasket={setProductsOnTheBasket}
+              productsOnTheBasket={productsOnTheBasket}
             ></CardProduct>)}
-
+            
         </ContainerProducts>
-
+        <Link to="/basket/">
+          <Basket>
+            <div>{productsOnTheBasket}</div>
+            <div><FiShoppingCart color={"#FFFFFF"} size={"50px"}></FiShoppingCart></div>
+          </Basket>
+        </Link>
+        
       </Container>
 
     </>
@@ -110,3 +122,31 @@ const ContainerProducts = styled.div`
     gap: 15px;
 
   `
+const Basket = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  position: fixed;
+  bottom: 20px;
+  right: 10px;
+  background-color: #ffc229;
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  font-size:26px;
+  color:#FFFFFF;
+  div:first-child{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    width:25px;
+    height:25px;
+    border-radius:50%;
+    background-color:red;
+
+  }
+  div:last-child{
+    margin-right:10px;
+  }
+`
