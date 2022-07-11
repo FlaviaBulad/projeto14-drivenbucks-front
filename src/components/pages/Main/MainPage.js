@@ -9,13 +9,12 @@ import Logo from "../../layout/Logo";
 import banner from "../../../assets/images/layout/banner.png";
 import CardProduct from "./CardProduct.js";
 
-  export default function MainPage() {
-  
+export default function MainPage() {
   const [products, setProducts] = useState([]);
   const [productsOnTheBasket, setProductsOnTheBasket] = useState(0);
 
   const navigate = useNavigate();
-  
+
   const token = localStorage.getItem("token");
   const config = {
     headers: {
@@ -32,24 +31,28 @@ import CardProduct from "./CardProduct.js";
         setProducts(responde.data);
       })
       .catch((error) => {
-        console.log("deu ruim");
+        console.log("deu ruim", error);
       });
   }, []);
 
   console.log(products);
-  if (products.length != 0) {
+  if (products.length !== 0) {
     console.log(products);
   }
-  function logout(){
-    const promise = axios.delete("https://drivenbucks.herokuapp.com/logout", config);
-    promise.then(response =>{
-      console.log(response);
-      navigate("/");
-    }).catch(error => {
-      console.log(error);
-    });
-
-  };
+  function logout() {
+    const promise = axios.delete(
+      "https://drivenbucks.herokuapp.com/logout",
+      config
+    );
+    promise
+      .then((response) => {
+        console.log(response);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   return (
     <>
       <Container>
@@ -89,7 +92,7 @@ import CardProduct from "./CardProduct.js";
       </Container>
     </>
   );
-};
+}
 const Container = styled.div`
   position: relative;
   background-color:#FFFFFF;
@@ -116,14 +119,13 @@ const ContainerHeader = styled.div`
     }
   `;
 const BackIcon = styled.div`
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #654C41;
-    border-radius: 4px;
-    cursor: pointer;
- `;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #654c41;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 const Banner = styled.img`
   position: absolute;
   right: 30;
@@ -145,10 +147,10 @@ const Basket = styled.div`
   bottom: 20px;
   right: 10px;
   background-color: #ffc229;
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  font-size: 26px;
+  font: 700 20px "Open Sans", sans-serif;
   color: #ffffff;
   div:first-child {
     display: flex;

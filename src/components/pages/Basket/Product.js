@@ -15,7 +15,7 @@ const List = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 2px 20px;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   .price {
     font: 700 14px "Open Sans", sans-serif;
     color: #000000;

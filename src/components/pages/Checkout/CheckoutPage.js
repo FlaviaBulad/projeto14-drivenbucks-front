@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import axios from "axios";
 import { FiArrowLeft } from "react-icons/fi";
 
 import { Link } from "react-router-dom";
@@ -48,24 +48,27 @@ export default function CheckoutPage() {
     setProducts([]);
     clearBasketAfterFinish();
     navigate("/");
-    
   }
 
-  function clearBasketAfterFinish (){
-    
+  function clearBasketAfterFinish() {
     const token = localStorage.getItem("token");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-    const promise = axios.delete("https://drivenbucks.herokuapp.com/basket",config);
-    promise.then(response => {
-      console.log(response);
-    }).catch(error => {
-      console.log(error);
-    });
-  };
+    const promise = axios.delete(
+      "https://drivenbucks.herokuapp.com/basket",
+      config
+    );
+    promise
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   const renderCheckoutPage = buildCheckout();
 
