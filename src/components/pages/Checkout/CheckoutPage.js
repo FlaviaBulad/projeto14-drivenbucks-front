@@ -46,8 +46,26 @@ export default function CheckoutPage() {
     alert("Pedido Finalizado com sucesso!");
     setTotalValue(0);
     setProducts([]);
+    clearBasketAfterFinish();
     navigate("/");
+    
   }
+
+  function clearBasketAfterFinish (){
+    
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const promise = axios.delete("https://drivenbucks.herokuapp.com/basket",config);
+    promise.then(response => {
+      console.log(response);
+    }).catch(error => {
+      console.log(error);
+    });
+  };
 
   const renderCheckoutPage = buildCheckout();
 
