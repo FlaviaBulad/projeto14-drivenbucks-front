@@ -46,12 +46,12 @@ export default function CardProduct({
 
   return (
     <Card>
-      <img src={image} />
+      <img src={image} alt="produto" />
       <div>
         <div>
           <h2>{title}</h2>
           <p>{description}</p>
-          <span>{rate}</span>
+          <span className="rate">{rate}</span>
         </div>
 
         <ValueContainer>
@@ -82,6 +82,9 @@ const Card = styled.div`
     margin-bottom: 10px;
     font: 400 10px "Open Sans", sans-serif;
   }
+  .rate {
+    color: #ffc229;
+  }
 `;
 const ValueContainer = styled.div`
   margin-top: 10px;
@@ -102,5 +105,8 @@ const ValueContainer = styled.div`
     border-radius: 5px;
     font: 700 12px "Open Sans", sans-serif;
     cursor: pointer;
+    &:hover {
+      background-color: #866658;
+    }
   }
 `;

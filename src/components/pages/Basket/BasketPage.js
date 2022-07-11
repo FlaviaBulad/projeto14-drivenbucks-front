@@ -107,9 +107,10 @@ export default function BasketPage() {
 
 const Container = styled.div`
   background-color: #ffffff;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  margin-top: 80px;
 `;
 
 const EmptyBasket = styled.p`
@@ -124,9 +125,9 @@ const EmptyBasket = styled.p`
 const Titles = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 20px 20px 6px 20px;
   span {
-    font: 700 12px "Open Sans", sans-serif;
+    font: 700 16px "Open Sans", sans-serif;
     color: #000000;
   }
 `;
