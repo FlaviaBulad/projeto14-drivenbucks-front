@@ -1,15 +1,19 @@
 import styled from "styled-components";
 import axios from "axios";
 
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { FiArrowLeft } from "react-icons/fi";
 
 import Product from "./Product";
 
+import BasketProductsContext from "../../../contexts/BasketProductsContext";
+import TotalValueContext from "../../../contexts/TotalValueContext";
+
 export default function BasketPage() {
-  const [products, setProducts] = useState([]);
+  const { products, setProducts } = useContext(BasketProductsContext);
+  const { totalValue, setTotalValue } = useContext(TotalValueContext);
 
   const token = localStorage.getItem("token");
 
@@ -37,13 +41,10 @@ export default function BasketPage() {
   function buildBasket() {
     if (products.length > 0) {
       return products.map((product, index) => {
-        const { name, price } = product;
+        const { title, price } = product;
         return (
           <>
-            <Product key={index} name={name} price={price} />
-            <Titles>
-              <span>Produtos</span> <span>Valor</span>
-            </Titles>
+            <Product key={index} title={title} price={price} />
           </>
         );
       });
@@ -61,7 +62,8 @@ export default function BasketPage() {
       const sum = products
         .map((product) => Number(product.price))
         .reduce((prev, curr) => parseFloat(prev + curr, 0));
-      return sum.toFixed(2);
+      setTotalValue(sum.toFixed(2));
+      return totalValue;
     } else {
       return initialValue;
     }
@@ -80,7 +82,9 @@ export default function BasketPage() {
           </BackIcon>
           <h1>Carrinho</h1>
         </StyledHeader>
-
+        <Titles>
+          <span>Produtos</span> <span>Valor</span>
+        </Titles>
         <BasketContent>{basketSession}</BasketContent>
 
         <StyledFooter>
@@ -128,14 +132,15 @@ const Titles = styled.div`
 `;
 
 const StyledHeader = styled.div`
+  position: fixed;
+  top: 0;
+  background-color: #ffffff;
   width: 100%;
   height: 80px;
   display: flex;
   flex-direction: row;
-  padding-top: 20px;
   padding-right: 50px;
   justify-content: space-evenly;
-
   align-items: center;
   border-bottom: 2px solid #efefef;
   h1 {
@@ -156,17 +161,20 @@ const BasketContent = styled.div`
   flex-direction: column;
 `;
 const StyledFooter = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
-  margin-top: 340px;
-  height: 100px;
+  height: 120px;
   width: 100%;
   border-top: 2px solid #efefef;
   .total {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 20px;
+    padding: 15px 20px;
   }
   span {
     font: 700 20px "Open Sans", sans-serif;
