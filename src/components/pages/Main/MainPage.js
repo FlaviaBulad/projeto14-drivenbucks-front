@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -9,10 +9,13 @@ import Logo from "../../layout/Logo";
 import banner from "../../../assets/images/layout/banner.png";
 import CardProduct from "./CardProduct.js";
 
-export default function MainPage() {
+  export default function MainPage() {
+  
   const [products, setProducts] = useState([]);
   const [productsOnTheBasket, setProductsOnTheBasket] = useState(0);
 
+  const navigate = useNavigate();
+  
   const token = localStorage.getItem("token");
   const config = {
     headers: {
@@ -37,7 +40,16 @@ export default function MainPage() {
   if (products.length != 0) {
     console.log(products);
   }
+  function logout(){
+    const promise = axios.delete("https://drivenbucks.herokuapp.com/logout", config);
+    promise.then(response =>{
+      console.log(response);
+      navigate("/");
+    }).catch(error => {
+      console.log(error);
+    });
 
+  };
   return (
     <>
       <Container>
@@ -47,7 +59,7 @@ export default function MainPage() {
           </BackIcon>
           <Logo></Logo>
           <BackIcon>
-            <FiLogOut color={"#654C41"} size={30}></FiLogOut>
+            <FiLogOut onClick={logout} color={"#654C41"} size={30}></FiLogOut>
           </BackIcon>
         </ContainerHeader>
         <Banner src={banner} alt="banner" />
@@ -77,7 +89,7 @@ export default function MainPage() {
       </Container>
     </>
   );
-}
+};
 const Container = styled.div`
   position: relative;
   background-color:#FFFFFF;
@@ -104,12 +116,14 @@ const ContainerHeader = styled.div`
     }
   `;
 const BackIcon = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #654c41;
-  border-radius: 4px;
-`;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #654C41;
+    border-radius: 4px;
+    cursor: pointer;
+ `;
 const Banner = styled.img`
   position: absolute;
   right: 30;
